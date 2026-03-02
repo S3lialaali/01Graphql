@@ -55,11 +55,10 @@ export default function Profile({token, onLogout}) {
         <div className="mt-6 rounded-xl bg-zinc-950/40 p-4 ring-1 ring-white/10">
           <p className="text-sm text-zinc-400">User</p>
           <p className="mt-1 text-lg">
-            {me ? `${me.login} (id: ${me.id})` : "Loading..."}
+            {user ? `${user.login} (id: ${user.id})` : "Loading..."}
           </p>
         </div>
       </div>
     </div>
   );
 }
-
