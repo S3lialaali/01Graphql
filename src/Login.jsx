@@ -4,6 +4,7 @@ import { signin } from "./api/auth";
 export default function Login({ onSuccess }) {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -44,14 +45,27 @@ export default function Login({ onSuccess }) {
 
           <div>
             <label className="text-sm text-zinc-300">Password</label>
-            <input
-              type="password"
-              className="mt-1 w-full rounded-xl bg-zinc-950/60 px-3 py-2 outline-none ring-1 ring-white/10 focus:ring-white/20"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              autoComplete="current-password"
-              required
-            />
+            <div className="relative mt-1">
+              <input
+                type={showPassword ? "text" : "password"}
+                className="w-full rounded-xl bg-zinc-950/60 px-3 py-2 pr-10 outline-none ring-1 ring-white/10 focus:ring-white/20"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="current-password"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute right-2 top-1/2 -translate-y-1/2 rounded-lg p-1.5 text-zinc-300 hover:bg-white/10 hover:text-zinc-100"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                <i
+                  className={`fa-solid ${showPassword ? "fa-eye-slash" : "fa-eye"} text-base`}
+                  aria-hidden="true"
+                />
+              </button>
+            </div>
           </div>
 
           {error ? (
