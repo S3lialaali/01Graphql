@@ -129,7 +129,7 @@ export default function TopProjectsSection({ token, active }) {
               </span>
             </div>
             <div
-              className="ml-8 h-1.5 rounded-full overflow-hidden"
+              className="ml-8 h-5 rounded-full overflow-hidden"
               style={{ background: "rgba(31,58,75,0.08)" }}
             >
               <div

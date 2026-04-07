@@ -65,7 +65,7 @@ function RadarChart({ skills, size = 240, label }) {
       )}
       <svg
         viewBox={`0 0 ${svgW} ${svgH}`}
-        className="w-full max-w-[260px]"
+        className="w-full"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -201,20 +201,20 @@ export default function SkillsSection({ token, active }) {
 
       {showBoth ? (
         <div className="grid grid-cols-2 gap-8">
-          <RadarChart skills={technologies} label="Technologies" size={220} />
-          <RadarChart skills={technical}    label="Concepts"     size={220} />
+          <RadarChart skills={technologies} label="Technologies" size={340} />
+          <RadarChart skills={technical}    label="Concepts"     size={340} />
         </div>
       ) : hasTech ? (
         <div className="flex justify-center">
-          <RadarChart skills={technologies} label="Technologies" size={260} />
+          <RadarChart skills={technologies} label="Technologies" size={400} />
         </div>
       ) : hasConcepts ? (
         <div className="flex justify-center">
-          <RadarChart skills={technical} label="Technical Concepts" size={260} />
+          <RadarChart skills={technical} label="Technical Concepts" size={400} />
         </div>
       ) : fallback.length >= 3 ? (
         <div className="flex justify-center">
-          <RadarChart skills={fallback} label="Skills" size={260} />
+          <RadarChart skills={fallback} label="Skills" size={400} />
         </div>
       ) : (
         <p className="text-[#1F3A4B]/35 text-sm">No skill data available yet.</p>

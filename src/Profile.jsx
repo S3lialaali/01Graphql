@@ -45,7 +45,7 @@ function Section({ children, maxWidth = "max-w-3xl" }) {
       style={{ perspective: "800px" }}
     >
       <motion.div
-        className={`relative z-10 bg-[#FAFDEE] w-full ${maxWidth} px-12 lg:px-24 py-28`}
+        className={`relative z-10 bg-[#FAFDEE] w-full ${maxWidth} px-6 lg:px-10 py-20`}
         style={{ rotateX, scale }}
       >
         {children(active)}
@@ -157,27 +157,27 @@ export default function Profile({ token, onLogout }) {
       </div>
 
       {/* ── You ───────────────────────────────────────────────────────── */}
-      <Section>
+      <Section maxWidth="max-w-4xl">
         {(active) => <YouSection token={token} active={active} />}
       </Section>
 
       {/* ── Audit ─────────────────────────────────────────────────────── */}
-      <Section>
+      <Section maxWidth="max-w-4xl">
         {(active) => <AuditSection token={token} active={active} />}
       </Section>
 
       {/* ── XP ────────────────────────────────────────────────────────── */}
-      <Section>
+      <Section maxWidth="max-w-5xl">
         {(active) => <XPStatsSection token={token} active={active} />}
       </Section>
 
       {/* ── Projects ──────────────────────────────────────────────────── */}
-      <Section>
+      <Section maxWidth="max-w-4xl">
         {(active) => <TopProjectsSection token={token} active={active} />}
       </Section>
 
       {/* ── Skills – wider for two radar charts ───────────────────────── */}
-      <Section maxWidth="max-w-4xl">
+      <Section maxWidth="max-w-6xl">
         {(active) => <SkillsSection token={token} active={active} />}
       </Section>
     </div>

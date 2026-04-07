@@ -41,7 +41,7 @@ function AuditBar({ label, value, pct, accent }) {
         </span>
         <span className="text-sm font-semibold tabular-nums">{formatBytes(value)}</span>
       </div>
-      <div className="h-2 rounded-full overflow-hidden" style={{ background: "rgba(31,58,75,0.09)" }}>
+      <div className="h-5 rounded-full overflow-hidden" style={{ background: "rgba(31,58,75,0.09)" }}>
         <div
           className="h-full rounded-full transition-all duration-700"
           style={{
@@ -131,7 +131,7 @@ export default function AuditSection({ token, active }) {
           <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#1F3A4B]/35 mb-2 text-center">
             Balance
           </p>
-          <div className="h-2.5 rounded-full overflow-hidden" style={{ background: "rgba(31,58,75,0.09)" }}>
+          <div className="h-6 rounded-full overflow-hidden" style={{ background: "rgba(31,58,75,0.09)" }}>
             <div
               className="h-full rounded-full"
               style={{ width: upPct + "%", background: "#C2F84F" }}

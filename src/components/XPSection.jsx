@@ -39,7 +39,7 @@ function Skeleton() {
 }
 
 function XPChart({ data }) {
-  const W = 560, H = 180, PX = 6, PY = 14;
+  const W = 900, H = 420, PX = 6, PY = 20;
 
   const t0  = data[0].date;
   const t1  = data[data.length - 1].date;
