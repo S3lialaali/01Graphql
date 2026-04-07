@@ -5,6 +5,7 @@ import AuditSection from "./components/AuditSection";
 import XPStatsSection from "./components/XPSection";
 import TopProjectsSection from "./components/ProjectsSection";
 import SkillsSection from "./components/SkillsSection";
+import ScrollStroke from "./components/ui/ScrollStroke";
 
 /* ─── lazy-load activation ──────────────────────────────────────────────── */
 function useSectionActive(ref) {
@@ -54,70 +55,12 @@ function Section({ children, maxWidth = "max-w-3xl" }) {
   );
 }
 
-/*
- * ONE continuous path — flower (y 0-50) + winding trail (y 50-600)
- * viewBox "0 0 100 600" + preserveAspectRatio="none"
- */
-const PATH =
-  "M 50,28 " +
-  "C 56,22 56,10 50,10 C 44,10 44,22 50,28 " +
-  "C 57,24 66,14 66,19 C 66,24 57,30 50,28 " +
-  "C 58,33 67,41 64,44 C 61,47 53,37 50,28 " +
-  "C 56,34 56,46 50,46 C 44,46 44,34 50,28 " +
-  "C 42,33 33,41 36,44 C 39,47 47,37 50,28 " +
-  "C 43,24 34,14 34,19 C 34,24 43,30 50,28 " +
-  "C 53,26 57,29 54,32 C 51,35 47,32 50,28 " +
-  "C 50,37 51,45 53,52 " +
-  "C 63,62 84,74 88,88 " +
-  "C 92,100 86,113 75,119 " +
-  "C 60,126 30,134 14,147 " +
-  "C 4,158 6,174 20,183 " +
-  "C 40,193 74,196 88,208 " +
-  "C 97,218 96,234 83,242 " +
-  "C 66,250 28,256 13,268 " +
-  "C 3,278 7,295 23,303 " +
-  "C 48,312 80,314 92,326 " +
-  "C 99,337 96,354 80,361 " +
-  "C 60,369 24,376 11,389 " +
-  "C 2,402 8,419 26,427 " +
-  "C 52,435 84,437 94,449 " +
-  "C 99,460 95,477 78,484 " +
-  "C 58,492 20,498 9,511 " +
-  "C 2,524 9,542 29,550 " +
-  "C 57,558 87,559 95,571 " +
-  "C 99,583 94,599 75,605 " +
-  "C 54,612 20,618 9,630 " +
-  "C 2,642 10,659 32,667 " +
-  "C 60,675 90,675 97,688";
-
 export default function Profile({ token, onLogout }) {
-  const { scrollYProgress } = useScroll();
-
-  const pathLength = useTransform(scrollYProgress, [0, 1], [0.17, 1]);
-
   return (
     <div className="relative bg-[#FAFDEE] text-[#1F3A4B] overflow-x-hidden">
 
       {/* ── Full-page decorative stroke ───────────────────────────────── */}
-      <div className="absolute inset-0 pointer-events-none z-0" aria-hidden="true">
-        <svg
-          viewBox="0 0 100 600"
-          preserveAspectRatio="none"
-          className="w-full h-full"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path d={PATH} stroke="#C2F84F" strokeWidth="0.8" opacity="0.18"
-            strokeLinecap="round" />
-          <motion.path
-            d={PATH}
-            stroke="#C2F84F"
-            strokeWidth="0.8"
-            strokeLinecap="round"
-            style={{ pathLength }}
-          />
-        </svg>
-      </div>
+      <ScrollStroke />
 
       {/* ── Logout ────────────────────────────────────────────────────── */}
       <button
