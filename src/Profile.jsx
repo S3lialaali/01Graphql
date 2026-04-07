@@ -147,9 +147,7 @@ export default function Profile({ token, onLogout }) {
       {/* No background — flower SVG shows through */}
       <div className="min-h-screen flex flex-col items-center justify-center text-center px-6 py-24 relative">
         <div className="relative z-10">
-          <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#1F3A4B]/35 mb-10">
-            Reboot School · Zone01
-          </p>
+         
           <h1
             className="font-bold leading-[0.92] tracking-tight mb-5"
             style={{ fontSize: "clamp(3rem, 10vw, 7rem)" }}

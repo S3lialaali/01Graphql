@@ -38,7 +38,7 @@ function RadarChart({ skills, size = 240, label }) {
   const cy     = size / 2 + pad;
   const r      = size * 0.38;
   const n      = skills.length;
-  const maxVal = Math.max(...skills.map((s) => s.amount), 1);
+  const maxVal = 100; // skill amounts are percentages (0-100)
   const svgW   = size + pad * 2;
   const svgH   = size + pad * 2 + 20; // extra 20 for chart label
 
@@ -69,11 +69,13 @@ function RadarChart({ skills, size = 240, label }) {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        {/* Guide polygons */}
+        {/* Guide circles */}
         {[0.25, 0.5, 0.75, 1].map((scale) => (
-          <polygon
+          <circle
             key={scale}
-            points={toPoly(skills.map((_, i) => pt(i, maxVal * scale)))}
+            cx={cx.toFixed(1)}
+            cy={cy.toFixed(1)}
+            r={(r * scale).toFixed(1)}
             fill="none"
             stroke="#1F3A4B"
             strokeWidth={scale === 1 ? 0.8 : 0.4}
