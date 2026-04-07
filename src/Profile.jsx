@@ -92,13 +92,10 @@ export default function Profile({ token, onLogout }) {
   /*
    * Flower occupies roughly 22% of total path length.
    * Map:  scroll 0%→17%  →  pathLength 3%→25%   (fast flower draw)
-   *       scroll 17%→100% →  pathLength 25%→100%  (trail through sections)
+   * Flower (first ~25% of path) is pre-filled at load.
+   * Trail draws from scroll 0% → 100%.
    */
-  const pathLength = useTransform(
-    scrollYProgress,
-    [0, 0.17, 1],
-    [0.03, 0.25, 1]
-  );
+  const pathLength = useTransform(scrollYProgress, [0, 1], [0.17, 1]);
 
   const youRef      = useRef(null);
   const auditRef    = useRef(null);

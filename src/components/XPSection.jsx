@@ -3,7 +3,17 @@ import { graphqlFetch } from "../api/graphql";
 
 const XP_QUERY = `
 query XP {
-  transaction(where: { type: { _eq: "xp" } }) {
+  transaction(
+    where: {
+      type: { _eq: "xp" }
+      path: { _like: "%-module/%" }
+      _and: [
+
+        { path: { _nlike: "%/piscine%/%" } }
+      ]
+    }
+    order_by: { createdAt: asc }
+  ) {
     amount
     createdAt
   }
@@ -121,8 +131,7 @@ export default function XPStatsSection({ token, active }) {
   const xpOverTime = useMemo(() => {
     if (!rows || rows.length === 0) return [];
     let cum = 0;
-    return [...rows]
-      .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+    return rows
       .map((r) => { cum += r.amount; return { date: new Date(r.createdAt).getTime(), total: cum }; });
   }, [rows]);
 

@@ -3,7 +3,16 @@ import { graphqlFetch } from "../api/graphql";
 
 const XP_PROJECTS_QUERY = `
 query XPProjects {
-  transaction(where: { type: { _eq: "xp" } }) {
+  transaction(
+    where: {
+      type: { _eq: "xp" }
+      path: { _like: "%-module/%" }
+      _and: [
+        { path: { _nlike: "%/checkpoint%" } },
+        { path: { _nlike: "%/piscine%/%" } }
+      ]
+    }
+  ) {
     amount
     path
   }
