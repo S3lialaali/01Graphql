@@ -79,7 +79,7 @@ export default function Login({ onSuccess }) {
       const token = await signin(identifier.trim(), password);
       onSuccess(token);
     } catch (err) {
-      setError(err.message || "Invalid credentials");
+      setError("Invalid credentials");
     } finally {
       setLoading(false);
     }

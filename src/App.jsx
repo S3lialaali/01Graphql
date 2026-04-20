@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Login from "./Login";
 import Profile from "./Profile";
+import { setUnauthenticatedHandler } from "./api/graphql";
 
 const TOKEN_KEY = "jwt";
 
@@ -9,17 +10,21 @@ export default function App() {
 
   useEffect(() => {
     const saved = localStorage.getItem(TOKEN_KEY);
-    if (saved) setToken(saved);
+    if (saved) {
+      setUnauthenticatedHandler(handleLogout);
+      setToken(saved);
+    }
   }, []);
-
-  function handleLogin(newToken) {
-    localStorage.setItem(TOKEN_KEY, newToken);
-    setToken(newToken);
-  }
 
   function handleLogout() {
     localStorage.removeItem(TOKEN_KEY);
     setToken(null);
+  }
+
+  function handleLogin(newToken) {
+    localStorage.setItem(TOKEN_KEY, newToken);
+    setUnauthenticatedHandler(handleLogout);
+    setToken(newToken);
   }
 
   return token ? (
