@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { signin } from "./api/auth";
+import ThemeToggle from "./components/ui/ThemeToggle";
 
 
-function ElegantShape({ className, delay = 0, width = 400, height = 100, rotate = 0, gradient = "from-[#1F3A4B]/10" }) {
+function ElegantShape({ className, delay = 0, width = 400, height = 100, rotate = 0, gradient = "from-ink/10" }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: -150, rotate: rotate - 15 }}
@@ -27,7 +28,7 @@ function ElegantShape({ className, delay = 0, width = 400, height = 100, rotate 
             "absolute inset-0 rounded-full",
             "bg-gradient-to-r to-transparent",
             gradient,
-            "border border-[#1F3A4B]/10",
+            "border border-ink/10",
             "shadow-[0_8px_32px_0_rgba(31,58,75,0.07)]",
           ].join(" ")}
         />
@@ -86,31 +87,37 @@ export default function Login({ onSuccess }) {
   }
 
   return (
-    <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#FAFDEE] text-[#1F3A4B]">
+    <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-canvas text-ink">
+
+      {/* Theme toggle */}
+      <div className="fixed top-5 right-5 z-50">
+        <ThemeToggle />
+      </div>
+
 
       {/* Subtle radial tint */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#C2F84F]/10 via-transparent to-[#1F3A4B]/5 blur-3xl pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-ink/5 blur-3xl pointer-events-none" />
 
       {/* Floating shapes */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <ElegantShape delay={0.3} width={600} height={140} rotate={12}
-          gradient="from-[#C2F84F]/25"
+          gradient="from-accent/25"
           className="left-[-10%] md:left-[-5%] top-[15%] md:top-[20%]" />
 
         <ElegantShape delay={0.5} width={500} height={120} rotate={-15}
-          gradient="from-[#1F3A4B]/12"
+          gradient="from-ink/12"
           className="right-[-5%] md:right-[0%] top-[65%] md:top-[70%]" />
 
         <ElegantShape delay={0.4} width={300} height={80} rotate={-8}
-          gradient="from-[#C2F84F]/20"
+          gradient="from-accent/20"
           className="left-[5%] md:left-[10%] bottom-[8%] md:bottom-[12%]" />
 
         <ElegantShape delay={0.6} width={200} height={60} rotate={20}
-          gradient="from-[#1F3A4B]/08"
+          gradient="from-ink/08"
           className="right-[15%] md:right-[20%] top-[8%] md:top-[12%]" />
 
         <ElegantShape delay={0.7} width={150} height={40} rotate={-25}
-          gradient="from-[#C2F84F]/18"
+          gradient="from-accent/18"
           className="left-[20%] md:left-[25%] top-[5%] md:top-[8%]" />
       </div>
 
@@ -120,10 +127,10 @@ export default function Login({ onSuccess }) {
         {/* Badge */}
         <motion.div
           custom={0} variants={fadeUp} initial="hidden" animate="visible"
-          className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#1F3A4B]/15 bg-[#1F3A4B]/04 mb-10"
+          className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-ink/15 bg-ink/04 mb-10"
         >
-          <div className="w-2 h-2 rounded-full bg-[#C2F84F]" />
-          <span className="text-xs font-semibold tracking-[0.18em] uppercase text-[#1F3A4B]/50">
+          <div className="w-2 h-2 rounded-full bg-accent" />
+          <span className="text-xs font-semibold tracking-[0.18em] uppercase text-ink/50">
             Reboot01
           </span>
         </motion.div>
@@ -140,7 +147,7 @@ export default function Login({ onSuccess }) {
 
         <motion.p
           custom={2} variants={fadeUp} initial="hidden" animate="visible"
-          className="text-lg font-light text-[#1F3A4B]/50 mb-12 tracking-wide"
+          className="text-lg font-light text-ink/50 mb-12 tracking-wide"
         >
           Interactive Dashboard
         </motion.p>
@@ -153,7 +160,7 @@ export default function Login({ onSuccess }) {
         >
           {/* Username */}
           <div>
-            <label className="block text-[10px] font-bold uppercase tracking-[0.22em] text-[#1F3A4B]/40 mb-1.5">
+            <label className="block text-[10px] font-bold uppercase tracking-[0.22em] text-ink/40 mb-1.5">
               Username or Email
             </label>
             <input
@@ -161,14 +168,14 @@ export default function Login({ onSuccess }) {
               onChange={(e) => setIdentifier(e.target.value)}
               autoComplete="username"
               required
-              className="w-full px-4 py-3 rounded-xl border border-[#1F3A4B]/15 bg-[#1F3A4B]/04 text-[#1F3A4B] placeholder-[#1F3A4B]/25 text-sm font-medium outline-none focus:border-[#1F3A4B]/40 focus:bg-[#1F3A4B]/06 transition-all duration-200"
+              className="w-full px-4 py-3 rounded-xl border border-ink/15 bg-ink/5 text-ink placeholder-ink/30 text-sm font-medium outline-none focus:border-ink/40 focus:bg-ink/10 transition-all duration-200"
               placeholder="your login"
             />
           </div>
 
           {/* Password */}
           <div>
-            <label className="block text-[10px] font-bold uppercase tracking-[0.22em] text-[#1F3A4B]/40 mb-1.5">
+            <label className="block text-[10px] font-bold uppercase tracking-[0.22em] text-ink/40 mb-1.5">
               Password
             </label>
             <div className="relative">
@@ -178,13 +185,13 @@ export default function Login({ onSuccess }) {
                 onChange={(e) => setPassword(e.target.value)}
                 autoComplete="current-password"
                 required
-                className="w-full px-4 py-3 pr-11 rounded-xl border border-[#1F3A4B]/15 bg-[#1F3A4B]/04 text-[#1F3A4B] placeholder-[#1F3A4B]/25 text-sm font-medium outline-none focus:border-[#1F3A4B]/40 focus:bg-[#1F3A4B]/06 transition-all duration-200"
+                className="w-full px-4 py-3 pr-11 rounded-xl border border-ink/15 bg-ink/5 text-ink placeholder-ink/30 text-sm font-medium outline-none focus:border-ink/40 focus:bg-ink/10 transition-all duration-200"
                 placeholder="••••••••"
               />
               <button
                 type="button"
                 onClick={() => setShowPw((v) => !v)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#1F3A4B]/35 hover:text-[#1F3A4B]/70 transition-colors cursor-pointer"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-ink/35 hover:text-ink/70 transition-colors cursor-pointer"
                 aria-label={showPw ? "Hide password" : "Show password"}
               >
                 <EyeIcon open={showPw} />
@@ -204,9 +211,9 @@ export default function Login({ onSuccess }) {
             type="submit"
             disabled={loading}
             className="w-full py-3 rounded-xl font-bold text-sm tracking-wide transition-all duration-200 cursor-pointer disabled:opacity-60"
-            style={{ background: "#1F3A4B", color: "#FAFDEE" }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = "#C2F84F"; e.currentTarget.style.color = "#1F3A4B"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = "#1F3A4B"; e.currentTarget.style.color = "#FAFDEE"; }}
+            style={{ background: "rgb(var(--ink))", color: "rgb(var(--canvas))" }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "rgb(var(--accent))"; e.currentTarget.style.color = "rgb(var(--ink))"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "rgb(var(--ink))"; e.currentTarget.style.color = "rgb(var(--canvas))"; }}
           >
             {loading ? "Signing in…" : "Sign In"}
           </button>
@@ -214,7 +221,7 @@ export default function Login({ onSuccess }) {
       </div>
 
       {/* Bottom fade */}
-      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#FAFDEE] to-transparent pointer-events-none" />
+      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-canvas to-transparent pointer-events-none" />
     </div>
   );
 }

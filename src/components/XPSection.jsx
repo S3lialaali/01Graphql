@@ -29,11 +29,11 @@ function fmtXP(n) {
 function Skeleton() {
   return (
     <div className="w-full animate-pulse text-center">
-      <div className="h-5 bg-[#1F3A4B]/10 rounded-full w-28 mb-3 mx-auto" />
-      <div className="h-10 bg-[#1F3A4B]/10 rounded-full w-52 mb-14 mx-auto" />
-      <div className="h-24 bg-[#1F3A4B]/10 rounded-2xl w-64 mb-4 mx-auto" />
-      <div className="h-4 bg-[#1F3A4B]/10 rounded-full w-40 mb-16 mx-auto" />
-      <div className="h-44 bg-[#1F3A4B]/10 rounded-2xl" />
+      <div className="h-5 bg-ink/10 rounded-full w-28 mb-3 mx-auto" />
+      <div className="h-10 bg-ink/10 rounded-full w-52 mb-14 mx-auto" />
+      <div className="h-24 bg-ink/10 rounded-2xl w-64 mb-4 mx-auto" />
+      <div className="h-4 bg-ink/10 rounded-full w-40 mb-16 mx-auto" />
+      <div className="h-44 bg-ink/10 rounded-2xl" />
     </div>
   );
 }
@@ -75,22 +75,22 @@ function XPChart({ data }) {
       {[0.33, 0.66, 1].map((s) => (
         <line key={s}
           x1={PX} y1={toY(max * s)} x2={W - PX} y2={toY(max * s)}
-          stroke="#1F3A4B" strokeWidth="0.4" opacity="0.12" strokeDasharray="5 4"
+          stroke="rgb(var(--ink))" strokeWidth="0.4" opacity="0.12" strokeDasharray="5 4"
         />
       ))}
-      <polygon points={areaPts} fill="#C2F84F" fillOpacity="0.14" />
-      <polyline points={pts.join(" ")} fill="none" stroke="#C2F84F"
+      <polygon points={areaPts} fill="rgb(var(--accent))" fillOpacity="0.14" />
+      <polyline points={pts.join(" ")} fill="none" stroke="rgb(var(--accent))"
         strokeWidth="2" strokeLinejoin="round" />
-      <circle cx={lastX.toFixed(1)} cy={lastY.toFixed(1)} r="4.5" fill="#C2F84F" />
+      <circle cx={lastX.toFixed(1)} cy={lastY.toFixed(1)} r="4.5" fill="rgb(var(--accent))" />
       <line x1={PX} y1={base} x2={W - PX} y2={base}
-        stroke="#1F3A4B" strokeWidth="0.4" opacity="0.18" />
+        stroke="rgb(var(--ink))" strokeWidth="0.4" opacity="0.18" />
       {ticks.map((p, i) => {
         const x = toX(p.date);
         const label = new Date(p.date).toLocaleDateString("en", { month: "short", year: "2-digit" });
         const anchor = i === 0 ? "start" : i === 2 ? "end" : "middle";
         return (
           <text key={i} x={x.toFixed(1)} y={H + 18} textAnchor={anchor}
-            fontSize="9.5" fill="#1F3A4B" fillOpacity="0.38"
+            fontSize="9.5" fill="rgb(var(--ink))" fillOpacity="0.38"
             fontFamily="system-ui, sans-serif" fontWeight="600">
             {label}
           </text>
@@ -144,7 +144,7 @@ export default function XPStatsSection({ token, active }) {
   return (
     <div className="w-full text-center">
       {/* Section title */}
-      <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#1F3A4B]/35 mb-2">
+      <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-ink/35 mb-2">
         Experience
       </p>
       <h2
@@ -162,23 +162,23 @@ export default function XPStatsSection({ token, active }) {
         >
           {xpVal}
         </span>
-        <span className="text-2xl font-light text-[#1F3A4B]/45 ml-3">{xpUnit}</span>
+        <span className="text-2xl font-light text-ink/45 ml-3">{xpUnit}</span>
       </div>
-      <p className="text-xs text-[#1F3A4B]/35 font-semibold uppercase tracking-widest mb-12">
+      <p className="text-xs text-ink/35 font-semibold uppercase tracking-widest mb-12">
         {rows.length.toLocaleString()} transactions
       </p>
 
       {/* Chart */}
       {xpOverTime.length > 1 && (
         <div>
-          <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#1F3A4B]/30 mb-5">
+          <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-ink/30 mb-5">
             Progress Over Time
           </p>
           <XPChart data={xpOverTime} />
         </div>
       )}
 
-      <div className="mt-12 h-0.5 w-20 bg-[#C2F84F] rounded-full mx-auto" />
+      <div className="mt-12 h-0.5 w-20 bg-accent rounded-full mx-auto" />
     </div>
   );
 }

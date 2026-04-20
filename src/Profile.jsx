@@ -6,6 +6,7 @@ import XPStatsSection from "./components/XPSection";
 import TopProjectsSection from "./components/ProjectsSection";
 import SkillsSection from "./components/SkillsSection";
 import ScrollStroke from "./components/ui/ScrollStroke";
+import ThemeToggle from "./components/ui/ThemeToggle";
 
 /* ─── lazy-load activation ──────────────────────────────────────────────── */
 function useSectionActive(ref) {
@@ -46,7 +47,7 @@ function Section({ children, maxWidth = "max-w-3xl" }) {
       style={{ perspective: "800px" }}
     >
       <motion.div
-        className={`relative z-10 bg-[#FAFDEE] w-full ${maxWidth} px-6 lg:px-10 py-20`}
+        className={`relative z-10 bg-surface w-full ${maxWidth} px-6 lg:px-10 py-20`}
         style={{ rotateX, scale }}
       >
         {children(active)}
@@ -57,18 +58,21 @@ function Section({ children, maxWidth = "max-w-3xl" }) {
 
 export default function Profile({ token, onLogout }) {
   return (
-    <div className="relative bg-[#FAFDEE] text-[#1F3A4B] overflow-x-hidden">
+    <div className="relative bg-canvas text-ink overflow-x-hidden">
 
       {/* ── Full-page decorative stroke ───────────────────────────────── */}
       <ScrollStroke />
 
-      {/* ── Logout ────────────────────────────────────────────────────── */}
-      <button
-        onClick={onLogout}
-        className="fixed top-5 right-5 z-50 px-5 py-2 text-sm font-bold border-2 border-[#1F3A4B] rounded-full hover:bg-[#1F3A4B] hover:text-[#FAFDEE] transition-all duration-200 cursor-pointer"
-      >
-        Logout
-      </button>
+      {/* ── Top-right controls ────────────────────────────────────────── */}
+      <div className="fixed top-5 right-5 z-50 flex items-center gap-3">
+        <ThemeToggle />
+        <button
+          onClick={onLogout}
+          className="px-5 py-2 text-sm font-bold border-2 border-ink rounded-full hover:bg-ink hover:text-canvas transition-all duration-200 cursor-pointer"
+        >
+          Logout
+        </button>
+      </div>
 
       {/* ── Welcome ───────────────────────────────────────────────────── */}
       <div className="min-h-screen flex flex-col items-center justify-center text-center px-6 py-24 relative">
@@ -80,15 +84,15 @@ export default function Profile({ token, onLogout }) {
             Welcome to<br />
             <span className="font-extralight">Reboot&rsquo;s</span>
           </h1>
-          <h2 className="text-2xl lg:text-3xl font-light text-[#1F3A4B]/55 mb-20">
+          <h2 className="text-2xl lg:text-3xl font-light text-ink/55 mb-20">
             Interactive Dashboard
           </h2>
           <div className="flex flex-col items-center gap-3">
-            <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-[#1F3A4B]/30">
+            <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-ink/30">
               Scroll to explore
             </p>
             <svg
-              viewBox="0 0 24 24" fill="none" stroke="#C2F84F" strokeWidth="2"
+              viewBox="0 0 24 24" fill="none" stroke="rgb(var(--accent))" strokeWidth="2"
               strokeLinecap="round" strokeLinejoin="round"
               className="w-5 h-5 animate-bounce"
             >

@@ -22,13 +22,13 @@ query You {
 function Skeleton() {
   return (
     <div className="w-full animate-pulse text-center">
-      <div className="h-10 bg-[#1F3A4B]/10 rounded-full w-48 mb-4 mx-auto" />
-      <div className="h-5 bg-[#1F3A4B]/10 rounded-full w-32 mb-16 mx-auto" />
-      <div className="h-20 bg-[#1F3A4B]/10 rounded-2xl w-52 mb-4 mx-auto" />
-      <div className="h-5 bg-[#1F3A4B]/10 rounded-full w-40 mb-16 mx-auto" />
+      <div className="h-10 bg-ink/10 rounded-full w-48 mb-4 mx-auto" />
+      <div className="h-5 bg-ink/10 rounded-full w-32 mb-16 mx-auto" />
+      <div className="h-20 bg-ink/10 rounded-2xl w-52 mb-4 mx-auto" />
+      <div className="h-5 bg-ink/10 rounded-full w-40 mb-16 mx-auto" />
       <div className="grid grid-cols-2 gap-6">
         {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="h-12 bg-[#1F3A4B]/10 rounded-xl" />
+          <div key={i} className="h-12 bg-ink/10 rounded-xl" />
         ))}
       </div>
     </div>
@@ -37,8 +37,8 @@ function Skeleton() {
 
 function Stat({ label, value }) {
   return (
-    <div className="text-center py-4 border border-[#1F3A4B]/10 rounded-xl">
-      <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#1F3A4B]/35 mb-1.5">
+    <div className="text-center py-4 border border-ink/10 rounded-xl">
+      <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-ink/35 mb-1.5">
         {label}
       </p>
       <p className="text-base font-semibold leading-tight">{value}</p>
@@ -81,7 +81,7 @@ export default function YouSection({ token, active }) {
   return (
     <div className="w-full text-center">
       {/* Section title */}
-      <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#1F3A4B]/35 mb-2">
+      <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-ink/35 mb-2">
         Identity
       </p>
       <h2
@@ -93,8 +93,8 @@ export default function YouSection({ token, active }) {
 
       {/* Avatar */}
       <div
-        className="w-20 h-20 rounded-full flex items-center justify-center text-xl font-bold text-[#FAFDEE] mx-auto mb-5 select-none"
-        style={{ background: "#1F3A4B" }}
+        className="w-20 h-20 rounded-full flex items-center justify-center text-xl font-bold text-canvas mx-auto mb-5 select-none"
+        style={{ background: "rgb(var(--ink))" }}
       >
         {initials}
       </div>
@@ -106,7 +106,7 @@ export default function YouSection({ token, active }) {
       >
         {me.login}
       </p>
-      <p className="text-lg font-light text-[#1F3A4B]/55 mb-12">
+      <p className="text-lg font-light text-ink/55 mb-12">
         {me.firstName} {me.lastName}
       </p>
 
@@ -118,7 +118,7 @@ export default function YouSection({ token, active }) {
         {labels.length > 0 && <Stat label="Tags" value={labels.join(", ")} />}
       </div>
 
-      <div className="mt-12 h-0.5 w-20 bg-[#C2F84F] rounded-full mx-auto" />
+      <div className="mt-12 h-0.5 w-20 bg-accent rounded-full mx-auto" />
     </div>
   );
 }

@@ -19,11 +19,11 @@ const TECH_NAMES = new Set([
 function Skeleton() {
   return (
     <div className="w-full animate-pulse text-center">
-      <div className="h-5 bg-[#1F3A4B]/10 rounded-full w-28 mb-3 mx-auto" />
-      <div className="h-10 bg-[#1F3A4B]/10 rounded-full w-72 mb-14 mx-auto" />
+      <div className="h-5 bg-ink/10 rounded-full w-28 mb-3 mx-auto" />
+      <div className="h-10 bg-ink/10 rounded-full w-72 mb-14 mx-auto" />
       <div className="grid grid-cols-2 gap-8">
-        <div className="h-64 bg-[#1F3A4B]/10 rounded-3xl" />
-        <div className="h-64 bg-[#1F3A4B]/10 rounded-3xl" />
+        <div className="h-64 bg-ink/10 rounded-3xl" />
+        <div className="h-64 bg-ink/10 rounded-3xl" />
       </div>
     </div>
   );
@@ -59,7 +59,7 @@ function RadarChart({ skills, size = 240, label }) {
   return (
     <div className="flex flex-col items-center">
       {label && (
-        <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#1F3A4B]/35 mb-4">
+        <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-ink/35 mb-4">
           {label}
         </p>
       )}
@@ -77,7 +77,7 @@ function RadarChart({ skills, size = 240, label }) {
             cy={cy.toFixed(1)}
             r={(r * scale).toFixed(1)}
             fill="none"
-            stroke="#1F3A4B"
+            stroke="rgb(var(--ink))"
             strokeWidth={scale === 1 ? 0.8 : 0.4}
             opacity={scale === 1 ? 0.18 : 0.09}
           />
@@ -89,23 +89,23 @@ function RadarChart({ skills, size = 240, label }) {
             key={i}
             x1={cx.toFixed(1)} y1={cy.toFixed(1)}
             x2={p.x.toFixed(1)} y2={p.y.toFixed(1)}
-            stroke="#1F3A4B" strokeWidth="0.5" opacity="0.13"
+            stroke="rgb(var(--ink))" strokeWidth="0.5" opacity="0.13"
           />
         ))}
 
         {/* Value polygon */}
         <polygon
           points={toPoly(valuePts)}
-          fill="#C2F84F"
+          fill="rgb(var(--accent))"
           fillOpacity="0.22"
-          stroke="#C2F84F"
+          stroke="rgb(var(--accent))"
           strokeWidth="1.8"
           strokeLinejoin="round"
         />
 
         {/* Value dots */}
         {valuePts.map((p, i) => (
-          <circle key={i} cx={p.x.toFixed(1)} cy={p.y.toFixed(1)} r="3" fill="#C2F84F" />
+          <circle key={i} cx={p.x.toFixed(1)} cy={p.y.toFixed(1)} r="3" fill="rgb(var(--accent))" />
         ))}
 
         {/* Labels */}
@@ -124,7 +124,7 @@ function RadarChart({ skills, size = 240, label }) {
               textAnchor={anchor}
               dominantBaseline="middle"
               fontSize="9.5"
-              fill="#1F3A4B"
+              fill="rgb(var(--ink))"
               fillOpacity="0.62"
               fontFamily="system-ui, sans-serif"
               fontWeight="700"
@@ -189,7 +189,7 @@ export default function SkillsSection({ token, active }) {
   return (
     <div className="w-full text-center">
       {/* Section title */}
-      <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#1F3A4B]/35 mb-2">
+      <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-ink/35 mb-2">
         Skills
       </p>
       <h2
@@ -217,10 +217,10 @@ export default function SkillsSection({ token, active }) {
           <RadarChart skills={fallback} label="Skills" size={400} />
         </div>
       ) : (
-        <p className="text-[#1F3A4B]/35 text-sm">No skill data available yet.</p>
+        <p className="text-ink/35 text-sm">No skill data available yet.</p>
       )}
 
-      <div className="mt-14 h-0.5 w-20 bg-[#C2F84F] rounded-full mx-auto" />
+      <div className="mt-14 h-0.5 w-20 bg-accent rounded-full mx-auto" />
     </div>
   );
 }

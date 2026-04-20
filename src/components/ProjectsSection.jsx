@@ -38,13 +38,13 @@ function Skeleton() {
   const ws = [88, 72, 60, 50, 40];
   return (
     <div className="w-full animate-pulse text-center">
-      <div className="h-5 bg-[#1F3A4B]/10 rounded-full w-32 mb-3 mx-auto" />
-      <div className="h-10 bg-[#1F3A4B]/10 rounded-full w-52 mb-14 mx-auto" />
+      <div className="h-5 bg-ink/10 rounded-full w-32 mb-3 mx-auto" />
+      <div className="h-10 bg-ink/10 rounded-full w-52 mb-14 mx-auto" />
       <div className="space-y-7">
         {ws.map((w, i) => (
           <div key={i} className="flex items-center gap-3">
-            <div className="h-2.5 bg-[#1F3A4B]/10 rounded-full w-24 shrink-0" />
-            <div className="h-2 bg-[#1F3A4B]/10 rounded-full flex-1" style={{ maxWidth: w + "%" }} />
+            <div className="h-2.5 bg-ink/10 rounded-full w-24 shrink-0" />
+            <div className="h-2 bg-ink/10 rounded-full flex-1" style={{ maxWidth: w + "%" }} />
           </div>
         ))}
       </div>
@@ -95,7 +95,7 @@ export default function TopProjectsSection({ token, active }) {
   const maxXP = topProjects[0]?.amount || 1;
 
   const barColor = (i) => {
-    if (i === 0) return "#C2F84F";
+    if (i === 0) return "rgb(var(--accent))";
     const a = Math.max(0.12, 0.40 - i * 0.07);
     return `rgba(31,58,75,${a})`;
   };
@@ -103,7 +103,7 @@ export default function TopProjectsSection({ token, active }) {
   return (
     <div className="w-full text-center">
       {/* Section title */}
-      <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#1F3A4B]/35 mb-2">
+      <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-ink/35 mb-2">
         Projects
       </p>
       <h2
@@ -119,12 +119,12 @@ export default function TopProjectsSection({ token, active }) {
           <div key={p.path}>
             <div className="flex items-baseline justify-between mb-2.5">
               <div className="flex items-center gap-3">
-                <span className="text-[10px] font-bold text-[#1F3A4B]/22 w-5 tabular-nums select-none">
+                <span className="text-[10px] font-bold text-ink/22 w-5 tabular-nums select-none">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <span className="text-base font-semibold">{humanName(p.name)}</span>
               </div>
-              <span className="text-xs font-semibold text-[#1F3A4B]/45 tabular-nums ml-4">
+              <span className="text-xs font-semibold text-ink/45 tabular-nums ml-4">
                 {fmtXP(p.amount)}
               </span>
             </div>
@@ -144,7 +144,7 @@ export default function TopProjectsSection({ token, active }) {
         ))}
       </div>
 
-      <div className="mt-14 h-0.5 w-20 bg-[#C2F84F] rounded-full mx-auto" />
+      <div className="mt-14 h-0.5 w-20 bg-accent rounded-full mx-auto" />
     </div>
   );
 }

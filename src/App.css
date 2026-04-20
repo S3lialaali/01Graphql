@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --canvas: 250 253 238;
+    --ink: 31 58 75;
+    --accent: 194 248 79;
+    --surface: 250 253 238;
+  }
+  .dark {
+    --canvas: 10 17 33;
+    --ink: 230 240 250;
+    --accent: 194 248 79;
+    --surface: 20 30 48;
+  }
+  html {
+    background: rgb(var(--canvas));
+    color: rgb(var(--ink));
+    transition: background-color 200ms ease, color 200ms ease;
+  }
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    -webkit-text-fill-color: rgb(var(--ink));
+    -webkit-box-shadow: 0 0 0px 1000px rgb(var(--canvas)) inset;
+    caret-color: rgb(var(--ink));
+    transition: background-color 5000s ease-in-out 0s;
+  }
+}

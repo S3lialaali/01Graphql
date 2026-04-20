@@ -5,7 +5,7 @@ import { useScroll, useTransform, motion } from "framer-motion";
  * viewBox "0 0 100 600" + preserveAspectRatio="none"
  * x 0-100 maps to full page width; y 0-600 maps to total page height (~6×100vh)
  * Stroke visible in left (x≈5-18) and right (x≈82-95) margins,
- * hidden behind centered content boxes (bg-[#FAFDEE] z-10).
+ * hidden behind centered content boxes (bg-canvas z-10).
  */
 const PATH =
   /* center (50,28) */
@@ -81,7 +81,7 @@ export default function ScrollStroke() {
         {/* faint ghost trace */}
         <path
           d={PATH}
-          stroke="#C2F84F"
+          stroke="rgb(var(--accent))"
           strokeWidth="0.8"
           opacity="0.18"
           strokeLinecap="round"
@@ -89,7 +89,7 @@ export default function ScrollStroke() {
         {/* scroll-driven reveal */}
         <motion.path
           d={PATH}
-          stroke="#C2F84F"
+          stroke="rgb(var(--accent))"
           strokeWidth="0.8"
           strokeLinecap="round"
           style={{ pathLength }}
