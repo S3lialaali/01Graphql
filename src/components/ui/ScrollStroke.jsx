@@ -67,7 +67,7 @@ const PATH =
  */
 export default function ScrollStroke() {
   const { scrollYProgress } = useScroll();
-  const pathLength = useTransform(scrollYProgress, [0, 1], [0.17, 1]);
+  const pathLength = useTransform(scrollYProgress, [0, 1], [0.17, 0.85]);
 
   return (
     <div className="absolute inset-0 pointer-events-none z-0" aria-hidden="true">
