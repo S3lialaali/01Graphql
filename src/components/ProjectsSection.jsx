@@ -96,8 +96,8 @@ export default function TopProjectsSection({ token, active }) {
 
   const barColor = (i) => {
     if (i === 0) return "rgb(var(--accent))";
-    const a = Math.max(0.12, 0.40 - i * 0.07);
-    return `rgba(31,58,75,${a})`;
+    const a = Math.max(0.45, 0.85 - i * 0.1);
+    return `rgb(var(--ink) / ${a})`;
   };
 
   return (
@@ -129,8 +129,7 @@ export default function TopProjectsSection({ token, active }) {
               </span>
             </div>
             <div
-              className="ml-8 h-5 rounded-full overflow-hidden"
-              style={{ background: "rgba(31,58,75,0.08)" }}
+              className="ml-8 h-5 rounded-full overflow-hidden bg-ink/10"
             >
               <div
                 className="h-full rounded-full transition-all duration-700"

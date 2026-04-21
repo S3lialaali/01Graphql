@@ -13,7 +13,7 @@
     --canvas: 10 17 33;
     --ink: 230 240 250;
     --accent: 194 248 79;
-    --surface: 20 30 48;
+    --surface: 10 17 33;
   }
   html {
     background: rgb(var(--canvas));
