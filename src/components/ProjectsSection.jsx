@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from "react";
 import { graphqlFetch } from "../api/graphql";
+import { ProjectsSkeleton } from "./ui/Skeletons";
 
 const XP_PROJECTS_QUERY = `
 query XPProjects {
@@ -34,23 +35,11 @@ function humanName(raw) {
   return raw.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-function Skeleton() {
-  const ws = [88, 72, 60, 50, 40];
-  return (
-    <div className="w-full animate-pulse text-center">
-      <div className="h-5 bg-ink/10 rounded-full w-32 mb-3 mx-auto" />
-      <div className="h-10 bg-ink/10 rounded-full w-52 mb-14 mx-auto" />
-      <div className="space-y-7">
-        {ws.map((w, i) => (
-          <div key={i} className="flex items-center gap-3">
-            <div className="h-2.5 bg-ink/10 rounded-full w-24 shrink-0" />
-            <div className="h-2 bg-ink/10 rounded-full flex-1" style={{ maxWidth: w + "%" }} />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
+const barColor = (i) => {
+  if (i === 0) return "rgb(var(--accent))";
+  const a = Math.max(0.45, 0.85 - i * 0.1);
+  return `rgb(var(--ink) / ${a})`;
+};
 
 export default function TopProjectsSection({ token, active }) {
   const [rows,    setRows]    = useState(null);
@@ -88,32 +77,19 @@ export default function TopProjectsSection({ token, active }) {
       .map(([path, amount]) => ({ path, name: shortPath(path), amount }));
   }, [rows]);
 
-  if (!active || loading) return <Skeleton />;
+  if (!active || loading) return <ProjectsSkeleton />;
   if (error)  return <p className="text-red-400 text-sm text-center">{error}</p>;
   if (!rows)  return null;
 
   const maxXP = topProjects[0]?.amount || 1;
 
-  const barColor = (i) => {
-    if (i === 0) return "rgb(var(--accent))";
-    const a = Math.max(0.45, 0.85 - i * 0.1);
-    return `rgb(var(--ink) / ${a})`;
-  };
-
   return (
     <div className="w-full text-center">
-      {/* Section title */}
-      <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-ink/35 mb-2">
-        Projects
-      </p>
-      <h2
-        className="font-bold tracking-tight leading-none mb-14"
-        style={{ fontSize: "clamp(2.4rem, 7vw, 4rem)" }}
-      >
+      <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-ink/35 mb-2">Projects</p>
+      <h2 className="font-bold tracking-tight leading-none mb-14" style={{ fontSize: "clamp(2.4rem, 7vw, 4rem)" }}>
         Your Best Work
       </h2>
 
-      {/* Horizontal bar chart */}
       <div className="space-y-8 text-left">
         {topProjects.map((p, i) => (
           <div key={p.path}>
@@ -124,20 +100,11 @@ export default function TopProjectsSection({ token, active }) {
                 </span>
                 <span className="text-base font-semibold">{humanName(p.name)}</span>
               </div>
-              <span className="text-xs font-semibold text-ink/45 tabular-nums ml-4">
-                {fmtXP(p.amount)}
-              </span>
+              <span className="text-xs font-semibold text-ink/45 tabular-nums ml-4">{fmtXP(p.amount)}</span>
             </div>
-            <div
-              className="ml-8 h-5 rounded-full overflow-hidden bg-ink/10"
-            >
-              <div
-                className="h-full rounded-full transition-all duration-700"
-                style={{
-                  width: ((p.amount / maxXP) * 100).toFixed(1) + "%",
-                  background: barColor(i),
-                }}
-              />
+            <div className="ml-8 h-5 rounded-full overflow-hidden bg-ink/10">
+              <div className="h-full rounded-full transition-all duration-700"
+                style={{ width: ((p.amount / maxXP) * 100).toFixed(1) + "%", background: barColor(i) }} />
             </div>
           </div>
         ))}

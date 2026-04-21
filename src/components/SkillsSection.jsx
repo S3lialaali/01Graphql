@@ -1,5 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { graphqlFetch } from "../api/graphql";
+import { SkillsSkeleton } from "./ui/Skeletons";
+import { RadarChart } from "./charts/Charts";
 
 const SKILLS_QUERY = `
 query Skills {
@@ -15,128 +17,6 @@ const TECH_NAMES = new Set([
   "php", "ruby", "bash", "ts", "typescript", "react", "docker", "git",
   "svelte", "vue", "angular", "java", "swift", "kotlin", "scala",
 ]);
-
-function Skeleton() {
-  return (
-    <div className="w-full animate-pulse text-center">
-      <div className="h-5 bg-ink/10 rounded-full w-28 mb-3 mx-auto" />
-      <div className="h-10 bg-ink/10 rounded-full w-72 mb-14 mx-auto" />
-      <div className="grid grid-cols-2 gap-8">
-        <div className="h-64 bg-ink/10 rounded-3xl" />
-        <div className="h-64 bg-ink/10 rounded-3xl" />
-      </div>
-    </div>
-  );
-}
-
-/* ── Radar / spider chart ──────────────────────────────────────────────── */
-function RadarChart({ skills, size = 240, label }) {
-  if (!skills || skills.length < 3) return null;
-
-  const pad    = 30;
-  const cx     = size / 2 + pad;
-  const cy     = size / 2 + pad;
-  const r      = size * 0.38;
-  const n      = skills.length;
-  const maxVal = 100; // skill amounts are percentages (0-100)
-  const svgW   = size + pad * 2;
-  const svgH   = size + pad * 2 + 20; // extra 20 for chart label
-
-  const angle = (i) => (2 * Math.PI * i) / n - Math.PI / 2;
-
-  const pt = (i, val) => {
-    const a  = angle(i);
-    const rv = (val / maxVal) * r;
-    return { x: cx + rv * Math.cos(a), y: cy + rv * Math.sin(a) };
-  };
-
-  const toPoly = (pts) =>
-    pts.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" ");
-
-  const outerPts = skills.map((_, i) => pt(i, maxVal));
-  const valuePts = skills.map((s, i) => pt(i, s.amount));
-
-  return (
-    <div className="flex flex-col items-center">
-      {label && (
-        <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-ink/35 mb-4">
-          {label}
-        </p>
-      )}
-      <svg
-        viewBox={`0 0 ${svgW} ${svgH}`}
-        className="w-full"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        {/* Guide circles */}
-        {[0.25, 0.5, 0.75, 1].map((scale) => (
-          <circle
-            key={scale}
-            cx={cx.toFixed(1)}
-            cy={cy.toFixed(1)}
-            r={(r * scale).toFixed(1)}
-            fill="none"
-            stroke="rgb(var(--ink))"
-            strokeWidth={scale === 1 ? 0.8 : 0.4}
-            opacity={scale === 1 ? 0.18 : 0.09}
-          />
-        ))}
-
-        {/* Spokes */}
-        {outerPts.map((p, i) => (
-          <line
-            key={i}
-            x1={cx.toFixed(1)} y1={cy.toFixed(1)}
-            x2={p.x.toFixed(1)} y2={p.y.toFixed(1)}
-            stroke="rgb(var(--ink))" strokeWidth="0.5" opacity="0.13"
-          />
-        ))}
-
-        {/* Value polygon */}
-        <polygon
-          points={toPoly(valuePts)}
-          fill="rgb(var(--accent))"
-          fillOpacity="0.22"
-          stroke="rgb(var(--accent))"
-          strokeWidth="1.8"
-          strokeLinejoin="round"
-        />
-
-        {/* Value dots */}
-        {valuePts.map((p, i) => (
-          <circle key={i} cx={p.x.toFixed(1)} cy={p.y.toFixed(1)} r="3" fill="rgb(var(--accent))" />
-        ))}
-
-        {/* Labels */}
-        {outerPts.map((_p, i) => {
-          const a    = angle(i);
-          const lx   = cx + (r + 20) * Math.cos(a);
-          const ly   = cy + (r + 20) * Math.sin(a);
-          const diff = lx - cx;
-          const anchor =
-            Math.abs(diff) < 6 ? "middle" : diff < 0 ? "end" : "start";
-          return (
-            <text
-              key={i}
-              x={lx.toFixed(1)}
-              y={(ly + 1).toFixed(1)}
-              textAnchor={anchor}
-              dominantBaseline="middle"
-              fontSize="9.5"
-              fill="rgb(var(--ink))"
-              fillOpacity="0.62"
-              fontFamily="system-ui, sans-serif"
-              fontWeight="700"
-            >
-              {skills[i].name.toUpperCase()}
-            </text>
-          );
-        })}
-      </svg>
-    </div>
-  );
-}
 
 export default function SkillsSection({ token, active }) {
   const [rows,    setRows]    = useState(null);
@@ -177,29 +57,22 @@ export default function SkillsSection({ token, active }) {
     };
   }, [rows]);
 
-  if (!active || loading) return <Skeleton />;
+  if (!active || loading) return <SkillsSkeleton />;
   if (error)  return <p className="text-red-400 text-sm text-center">{error}</p>;
   if (!rows)  return null;
 
   const hasTech     = technologies.length >= 3;
   const hasConcepts = technical.length    >= 3;
-  const showBoth    = hasTech && hasConcepts;
   const fallback    = [...technologies, ...technical].slice(0, 8);
 
   return (
     <div className="w-full text-center">
-      {/* Section title */}
-      <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-ink/35 mb-2">
-        Skills
-      </p>
-      <h2
-        className="font-bold tracking-tight leading-none mb-14"
-        style={{ fontSize: "clamp(2rem, 6vw, 3.5rem)" }}
-      >
+      <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-ink/35 mb-2">Skills</p>
+      <h2 className="font-bold tracking-tight leading-none mb-14" style={{ fontSize: "clamp(2rem, 6vw, 3.5rem)" }}>
         Your Technical Profile
       </h2>
 
-      {showBoth ? (
+      {hasTech && hasConcepts ? (
         <div className="grid grid-cols-2 gap-8">
           <RadarChart skills={technologies} label="Technologies" size={340} />
           <RadarChart skills={technical}    label="Concepts"     size={340} />

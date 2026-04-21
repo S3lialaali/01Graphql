@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { graphqlFetch } from "../api/graphql";
+import { AuditSkeleton } from "./ui/Skeletons";
+import { AuditBar } from "./ui/Widgets";
 
 const AUDIT_QUERY = `
 query Audit {
@@ -10,49 +12,6 @@ query Audit {
   }
 }
 `;
-
-function formatBytes(b) {
-  if (!b) return "0 B";
-  if (b >= 1_000_000) return (b / 1_000_000).toFixed(2) + " MB";
-  if (b >= 1_000)     return (b / 1_000).toFixed(1) + " kB";
-  return b + " B";
-}
-
-function Skeleton() {
-  return (
-    <div className="w-full animate-pulse text-center">
-      <div className="h-5 bg-ink/10 rounded-full w-36 mb-3 mx-auto" />
-      <div className="h-10 bg-ink/10 rounded-full w-56 mb-14 mx-auto" />
-      <div className="h-28 bg-ink/10 rounded-2xl mb-10 mx-auto w-40" />
-      <div className="space-y-6">
-        <div className="h-8 bg-ink/10 rounded-xl" />
-        <div className="h-8 bg-ink/10 rounded-xl" />
-      </div>
-    </div>
-  );
-}
-
-function AuditBar({ label, value, pct, accent }) {
-  return (
-    <div>
-      <div className="flex justify-between items-baseline mb-2">
-        <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-ink/40">
-          {label}
-        </span>
-        <span className="text-sm font-semibold tabular-nums">{formatBytes(value)}</span>
-      </div>
-      <div className="h-5 rounded-full overflow-hidden" style={{ background: "rgba(31,58,75,0.09)" }}>
-        <div
-          className="h-full rounded-full transition-all duration-700"
-          style={{
-            width: pct + "%",
-            background: accent ? "rgb(var(--accent))" : "rgba(31,58,75,0.4)",
-          }}
-        />
-      </div>
-    </div>
-  );
-}
 
 export default function AuditSection({ token, active }) {
   const [audit,   setAudit]   = useState(null);
@@ -79,7 +38,7 @@ export default function AuditSection({ token, active }) {
     return () => { cancelled = true; };
   }, [active, token, audit]);
 
-  if (!active || loading) return <Skeleton />;
+  if (!active || loading) return <AuditSkeleton />;
   if (error)  return <p className="text-red-400 text-sm text-center">{error}</p>;
   if (!audit) return null;
 
@@ -90,52 +49,30 @@ export default function AuditSection({ token, active }) {
 
   return (
     <div className="w-full text-center">
-      {/* Section title */}
-      <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-ink/35 mb-2">
-        Audit
-      </p>
-      <h2
-        className="font-bold tracking-tight leading-none mb-14"
-        style={{ fontSize: "clamp(2rem, 6vw, 3.5rem)" }}
-      >
+      <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-ink/35 mb-2">Audit</p>
+      <h2 className="font-bold tracking-tight leading-none mb-14" style={{ fontSize: "clamp(2rem, 6vw, 3.5rem)" }}>
         Your Audit Ratio
       </h2>
 
-      {/* Big ratio number */}
       <div className="mb-3">
-        <span
-          className="font-bold leading-none tracking-tighter"
-          style={{ fontSize: "clamp(4.5rem, 16vw, 7rem)" }}
-        >
+        <span className="font-bold leading-none tracking-tighter" style={{ fontSize: "clamp(4.5rem, 16vw, 7rem)" }}>
           {audit.ratio.toFixed(2)}
         </span>
       </div>
 
-      {/* Badge */}
-      <span
-        className="inline-block text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wide mb-12"
-        style={{
-          background: good ? "rgb(var(--accent))" : "#FFE4E4",
-          color:      good ? "rgb(var(--ink))" : "#B91C1C",
-        }}
-      >
+      <span className="inline-block text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wide mb-12"
+        style={{ background: good ? "rgb(var(--accent))" : "#FFE4E4", color: good ? "rgb(var(--ink))" : "#B91C1C" }}>
         {good ? "On track" : "Needs work"}
       </span>
 
-      {/* Bars */}
       <div className="space-y-7 text-left">
         <AuditBar label="Audits Done"     value={audit.up}   pct={upPct}   accent />
         <AuditBar label="Audits Received" value={audit.down} pct={downPct} />
 
         <div>
-          <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-ink/35 mb-2 text-center">
-            Balance
-          </p>
-          <div className="h-6 rounded-full overflow-hidden" style={{ background: "rgba(31,58,75,0.09)" }}>
-            <div
-              className="h-full rounded-full"
-              style={{ width: upPct + "%", background: "rgb(var(--accent))" }}
-            />
+          <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-ink/35 mb-2 text-center">Balance</p>
+          <div className="h-6 rounded-full overflow-hidden bg-ink/10">
+            <div className="h-full rounded-full" style={{ width: upPct + "%", background: "rgb(var(--accent))" }} />
           </div>
           <div className="flex justify-between mt-2 text-[9px] font-semibold text-ink/35">
             <span>Done {upPct}%</span>
